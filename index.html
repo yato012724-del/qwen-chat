@@ -3,58 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content">
-  <title>Qwen AI Chat</title>
-  <meta name="description" content="ИИ-ассистент Qwen 2.5 — работает на вашем устройстве">
-  <meta name="theme-color" content="#2563eb">
-  
-  <!-- Шрифты -->
+  <title>Nova AI</title>
+  <meta name="description" content="Nova AI — умный ассистент">
+  <meta name="theme-color" content="#7c3aed">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
-  <!-- Markdown парсер -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  
-  <!-- Стили -->
   <link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 
+<!-- SIDEBAR -->
+<div id="nv-sidebar">
+  <div id="nv-sb-head">
+    <div id="nv-sb-logo">N</div>
+    <span id="nv-sb-title">Nova AI</span>
+    <button id="nv-sb-close" aria-label="Закрыть">
+      <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </button>
+  </div>
+  <button id="nv-sb-new" title="Новый чат">
+    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+    Новый чат
+  </button>
+  <div id="nv-sb-chats"></div>
+  <div id="nv-sb-footer">
+    <button id="nv-sb-mode" title="Режим работы">
+      <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      <span id="nv-mode-label">☁️ Сервер</span>
+    </button>
+    <button id="nv-sb-theme" title="Тема">
+      <svg class="i-sun" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1z"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" style="display:none"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+    </button>
+    <button id="nv-sb-clear" title="Очистить чат">
+      <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+    </button>
+  </div>
+</div>
+<div id="nv-sb-overlay"></div>
+
+<!-- PROGRESS BAR (fixed at top when loading model) -->
+<div id="nv-progress" style="display:none">
+  <div id="nv-prog-inner">
+    <span id="nv-prog-icon">🧠</span>
+    <div id="nv-prog-info">
+      <div id="nv-prog-text">Загрузка модели...</div>
+      <div id="nv-prog-bar"><div id="nv-prog-fill"></div></div>
+    </div>
+    <span id="nv-prog-pct">0%</span>
+    <button id="nv-prog-cancel">✕</button>
+  </div>
+</div>
+
+<!-- MAIN CHAT -->
 <div id="qc">
-  <!-- ТУЛБАР -->
+  <!-- TOP BAR -->
   <div id="qc-bar">
     <div id="qc-bar-l">
-      <div id="qc-ava">
-        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+      <button id="nv-menu-btn" title="Меню">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+      </button>
+      <div id="qc-bar-title">
+        <div id="qc-name">Nova <span id="qc-n2">AI</span></div>
+        <div id="qc-stat">онлайн</div>
       </div>
-      <div>
-        <div id="qc-name">Qwen<span id="qc-n2"> 2.5</span></div>
-        <div id="qc-stat">загрузка...</div>
-      </div>
-    </div>
-    <div id="qc-bar-r">
-      <button class="qc-tb" id="qc-theme" title="Тема">
-        <svg class="i-sun" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0zM7.05 18.36l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0z"/></svg>
-        <svg class="i-moon" viewBox="0 0 24 24" style="display:none"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
-      </button>
-      <button class="qc-tb" id="qc-think" title="Глубокое мышление">
-        <svg viewBox="0 0 24 24"><path d="M13 8.57c-.79 0-1.43.64-1.43 1.43s.64 1.43 1.43 1.43 1.43-.64 1.43-1.43S13.79 8.57 13 8.57zM13 3C9.25 3 6.2 5.94 6.02 9.64L4.1 12.2c-.25.33-.01.8.4.8H6v3c0 1.1.9 2 2 2h1v3h7v-4.68c2.36-1.12 4-3.53 4-6.32 0-3.87-3.13-7-7-7zm3 7c0 .13-.01.26-.02.39l.83.66c.08.06.1.16.05.25l-.8 1.39c-.05.09-.16.12-.24.09l-.99-.4c-.21.16-.43.29-.67.39L14 13.83c-.01.1-.1.17-.2.17h-1.6c-.1 0-.18-.07-.2-.17l-.15-1.06c-.25-.1-.47-.23-.68-.39l-.99.4c-.09.03-.2 0-.25-.09l-.8-1.39a.2.2 0 0 1 .05-.25l.84-.66C10.01 10.26 10 10.13 10 10s.01-.26.03-.39l-.84-.66a.19.19 0 0 1-.05-.25l.8-1.39c.05-.09.15-.12.25-.09l.99.4c.21-.16.43-.29.68-.39l.15-1.06c.01-.1.1-.17.2-.17h1.6c.1 0 .18.07.2.17l.15 1.06c.24.1.46.23.67.39l.99-.4c.09-.04.19 0 .24.09l.8 1.39c.05.09.03.19-.05.25l-.83.66c.01.13.02.26.02.39z"/></svg>
-      </button>
-      <button class="qc-tb" id="qc-refresh" title="Новый чат">
-        <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-      </button>
-      <button class="qc-tb" id="qc-clear" title="Очистить">
-        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-      </button>
     </div>
   </div>
 
-  <!-- ЛЕНТА СООБЩЕНИЙ -->
+  <!-- MESSAGES -->
   <div id="qc-msgs">
     <div id="qc-welcome">
-      <div id="qc-wi"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg></div>
-      <h2 id="qc-wh">Привет! Я&thinsp;<span>Qwen 2.5</span>&thinsp;👋</h2>
-      <p id="qc-wp">Задайте вопрос, загрузите файл или выберите подсказку</p>
+      <div id="qc-wi">N</div>
+      <h2 id="qc-wh">Nova AI</h2>
+      <p id="qc-wp">Чем могу помочь?</p>
       <div id="qc-chips">
         <button class="qc-chip" data-p="write">✍️ Написать текст</button>
         <button class="qc-chip" data-p="task">🔍 Разобрать задачу</button>
@@ -63,36 +86,41 @@
     </div>
   </div>
 
-  <!-- КНОПКА ВНИЗ -->
   <button id="qc-dn" aria-label="Вниз">
     <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
   </button>
 
-  <!-- НИЖНЯЯ ПАНЕЛЬ -->
+  <!-- INPUT PANEL -->
   <div id="qc-bot">
     <input type="file" id="qc-fi" multiple style="display:none!important" accept=".txt,.md,.csv,.json,.pdf,.png,.jpg,.jpeg,.gif,.webp,.py,.js,.ts,.html,.css,.xml,.yaml,.yml,.log,.sh,.xlsx,.docx">
     <div id="qc-pills"></div>
     <div id="qc-inarea">
       <div id="qc-wrap">
-        <button class="qc-ib" id="qc-att" title="Прикрепить файл">
+        <button class="qc-ib" id="qc-att" title="Файл">
           <svg viewBox="0 0 24 24"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
+        </button>
+        <textarea id="qc-in" placeholder="Спросите что-нибудь..." rows="1" autocomplete="off" spellcheck="true" enterkeyhint="send"></textarea>
+        <!-- Кнопки внутри поля ввода -->
+        <button class="qc-ib nv-toggle" id="nv-think" title="Глубокое мышление">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93s3.05-7.44 7-7.93v15.86zm2-15.86c1.03.13 2 .45 2.87.93H13v-.93zM13 7h5.24c.25.31.48.65.68 1H13V7zm0 3h6.74c.08.33.15.66.19 1H13v-1zm0 3h6.93c-.04.34-.11.67-.19 1H13v-1zm0 3h5.92c-.2.35-.43.69-.68 1H13v-1zm0 3h2.87c-.87.48-1.84.8-2.87.93V19z"/></svg>
+        </button>
+        <button class="qc-ib nv-toggle" id="nv-search" title="Поиск в интернете">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
         </button>
         <button class="qc-ib" id="qc-mic" title="Голос">
           <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
         </button>
         <div id="qc-wave"><s></s><s></s><s></s><s></s><s></s><s></s><s></s><s></s></div>
-        <textarea id="qc-in" placeholder="Напишите сообщение..." rows="1" autocomplete="off" spellcheck="true" enterkeyhint="send"></textarea>
         <button id="qc-send" title="Отправить">
-          <svg id="qc-sic" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-          <svg id="qc-pic" viewBox="0 0 24 24" style="display:none"><path d="M6 6h12v12H6z"/></svg>
+          <svg id="qc-sic" viewBox="0 0 24 24"><path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg>
+          <svg id="qc-pic" viewBox="0 0 24 24" style="display:none"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
         </button>
       </div>
     </div>
-    <div id="qc-disclaimer">ИИ может допускать ошибки. Проверяйте важную информацию.</div>
+    <div id="qc-disclaimer">Nova AI может ошибаться. Проверяйте важную информацию.</div>
   </div>
 </div>
 
-<!-- Скрипт -->
 <script src="assets/chat.js"></script>
 </body>
 </html>

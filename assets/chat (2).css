@@ -4,8 +4,6 @@
    Design: Clean minimalism with warm accents
 ═══════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
 html, body {
   overflow: hidden !important;
   height: 100% !important;
@@ -13,6 +11,14 @@ html, body {
   margin: 0 !important;
   padding: 0 !important;
   overscroll-behavior: none !important;
+}
+
+/* SVG safety — never expand beyond container */
+#nova svg {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
 }
 
 /* ── LIGHT TOKENS ── */
@@ -120,12 +126,15 @@ button { font-family: var(--f); cursor: pointer; -webkit-tap-highlight-color: tr
 }
 .nova-sb-icon {
   width: 36px; height: 36px;
+  min-width: 36px; min-height: 36px;
   border-radius: 10px;
   background: var(--nova-g);
   display: flex; align-items: center; justify-content: center;
   box-shadow: var(--sa);
+  overflow: hidden;
+  flex-shrink: 0;
 }
-.nova-sb-icon svg { width: 18px; height: 18px; fill: #fff; }
+.nova-sb-icon svg { width: 18px !important; height: 18px !important; fill: #fff !important; }
 .nova-sb-brand {
   font-size: 16px;
   font-weight: 700;
@@ -302,12 +311,15 @@ button { font-family: var(--f); cursor: pointer; -webkit-tap-highlight-color: tr
 }
 .nova-h-icon {
   width: 30px; height: 30px;
+  min-width: 30px; min-height: 30px;
   border-radius: 8px;
   background: var(--nova-g);
   display: flex; align-items: center; justify-content: center;
   box-shadow: var(--sa);
+  overflow: hidden;
+  flex-shrink: 0;
 }
-.nova-h-icon svg { width: 15px; height: 15px; fill: #fff; }
+.nova-h-icon svg { width: 15px !important; height: 15px !important; fill: #fff !important; }
 .nova-h-name {
   font-size: 15px;
   font-weight: 700;
@@ -387,14 +399,18 @@ button { font-family: var(--f); cursor: pointer; -webkit-tap-highlight-color: tr
 
 .nova-w-icon {
   width: 72px; height: 72px;
+  min-width: 72px; min-height: 72px;
+  max-width: 72px; max-height: 72px;
   border-radius: 22px;
   background: var(--nova-g);
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 12px 32px rgba(249,115,22,.25);
   margin-bottom: 20px;
   animation: float 4s ease-in-out infinite;
+  overflow: hidden;
+  flex-shrink: 0;
 }
-.nova-w-icon svg { width: 32px; height: 32px; fill: #fff; }
+.nova-w-icon svg { width: 32px !important; height: 32px !important; fill: #fff !important; flex-shrink: 0; }
 @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
 
 .nova-w-title {

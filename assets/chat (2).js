@@ -135,12 +135,12 @@ function renderChatList(){
     const el = document.createElement('div');
     el.className = 'nova-chat-item' + (ch.id === activeChatId ? ' active' : '');
     el.innerHTML = `
-      <div class="nova-chat-item-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div>
+      <div class="nova-chat-item-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div>
       <div class="nova-chat-item-text">
         <div class="nova-chat-item-title">${esc(ch.title || 'Новый чат')}</div>
         <div class="nova-chat-item-date">${new Date(ch.created).toLocaleDateString('ru-RU')}</div>
       </div>
-      <div class="nova-chat-item-del" data-id="${ch.id}"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></div>`;
+      <div class="nova-chat-item-del" data-id="${ch.id}"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></div>`;
     el.addEventListener('click', (e) => {
       if(e.target.closest('.nova-chat-item-del')) return;
       switchChat(ch.id);
@@ -497,7 +497,7 @@ function renderPills(){
   attached.forEach((f,i) => {
     const d = document.createElement('div');
     d.className = 'nova-pill';
-    d.innerHTML = `<svg viewBox="0 0 24 24">${fileIcon(f)}</svg><span class="nova-pill-name" title="${esc(f.name)}">${esc(f.name)}</span><div class="nova-pill-rm" data-i="${i}"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>`;
+    d.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">${fileIcon(f)}</svg><span class="nova-pill-name" title="${esc(f.name)}">${esc(f.name)}</span><div class="nova-pill-rm" data-i="${i}"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div>`;
     pills.appendChild(d);
   });
   pills.querySelectorAll('.nova-pill-rm').forEach(b => {
@@ -536,13 +536,13 @@ function enhCode(el){
     const lang = cls ? cls.replace('language-','') : 'code';
     const hdr = document.createElement('div');
     hdr.className = 'nova-pre-hdr';
-    hdr.innerHTML = `<span class="nova-pre-lang">${esc(lang)}</span><button class="nova-pre-cp"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>`;
+    hdr.innerHTML = `<span class="nova-pre-lang">${esc(lang)}</span><button class="nova-pre-cp"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>`;
     pre.insertBefore(hdr, pre.firstChild);
     hdr.querySelector('.nova-pre-cp').onclick = () => {
       navigator.clipboard.writeText(code ? code.innerText : pre.innerText).then(() => {
         const b = hdr.querySelector('.nova-pre-cp');
-        b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
-        setTimeout(() => { b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>'; }, 2000);
+        b.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+        setTimeout(() => { b.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>'; }, 2000);
       });
     };
   });
@@ -558,9 +558,9 @@ function toggleUI(g){
 }
 
 /* ═══ MESSAGES ═══ */
-const IC_CP = '<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
-const IC_OK = '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
-const IC_RT = '<svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>';
+const IC_CP = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>';
+const IC_OK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+const IC_RT = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>';
 
 function addMsg(text, side, filesInfo=[], exIdx=null){
   const wrap = document.createElement('div');
@@ -625,7 +625,7 @@ function renderFilesBubble(cnt, fi){
   fd.className = 'nova-msg-files';
   fi.forEach(f => {
     const n = typeof f === 'string' ? f : (f.name || '');
-    fd.innerHTML += `<span class="nova-file-tag"><svg viewBox="0 0 24 24">${fileIconByName(n)}</svg>${esc(n)}</span>`;
+    fd.innerHTML += `<span class="nova-file-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">${fileIconByName(n)}</svg>${esc(n)}</span>`;
   });
   cnt.appendChild(fd);
 }
@@ -641,7 +641,9 @@ function createWelcome(){
   const d = document.createElement('div');
   d.id = 'nova-welcome';
   d.innerHTML = `
-    <div class="nova-w-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+    <div class="nova-w-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    </div>
     <h2 class="nova-w-title">Привет! Я <span>Nova AI</span> 👋</h2>
     <p class="nova-w-sub">Умный ассистент от Nova. Задайте вопрос, загрузите файл или выберите подсказку</p>
     <div class="nova-w-chips">

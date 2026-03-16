@@ -1,0 +1,603 @@
+/* ════════════════════════════════════════════════════════
+   QWEN CHAT CSS v10 — FINAL
+   v10: все :hover обёрнуты в @media(hover:hover)
+   — на тач-устройствах hover НИКОГДА не залипнет
+════════════════════════════════════════════════════════ */
+
+html, body {
+  overflow: hidden !important;
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overscroll-behavior: none !important;
+  -webkit-overflow-scrolling: auto !important;
+}
+
+/* ── ТОКЕНЫ СВЕТЛАЯ ── */
+#qc {
+  --f:  'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mo: 'JetBrains Mono', 'Courier New', monospace;
+  --bg:  #f0f4fc;
+  --pn:  #ffffff;
+  --inp: #ffffff;
+  --bot: #ffffff;
+  --cd:  #0f172a;
+  --pll: #eef2ff;
+  --brd: rgba(30,41,59,.09);
+  --brf: #2563eb;
+  --t1:  #0f172a;
+  --t2:  #64748b;
+  --t3:  #94a3b8;
+  --tu:  #ffffff;
+  --tc:  #e2e8f0;
+  --ac:  #2563eb;
+  --ag:  rgba(37,99,235,.18);
+  --as:  #eff6ff;
+  --er:  #ef4444;
+  --ok:  #10b981;
+  --wn:  #f59e0b;
+  --s1:  0 1px 3px rgba(0,0,0,.06);
+  --s2:  0 4px 16px rgba(0,0,0,.07),0 2px 6px rgba(0,0,0,.04);
+  --sa:  0 4px 18px rgba(37,99,235,.28);
+  --ez:  cubic-bezier(.4,0,.2,1);
+}
+
+/* ── ТЁМНАЯ ── */
+#qc.dk {
+  --bg:  #0b0e1a;
+  --pn:  #111525;
+  --inp: #181d30;
+  --bot: #181d30;
+  --cd:  #090c18;
+  --pll: #1a2040;
+  --brd: rgba(255,255,255,.07);
+  --brf: #3b82f6;
+  --t1:  #e2e8f0;
+  --t2:  #94a3b8;
+  --t3:  #475569;
+  --ac:  #3b82f6;
+  --ag:  rgba(59,130,246,.22);
+  --as:  rgba(59,130,246,.12);
+  --er:  #f87171;
+  --ok:  #34d399;
+  --s1:  0 1px 4px rgba(0,0,0,.4);
+  --s2:  0 4px 18px rgba(0,0,0,.4);
+  --sa:  0 4px 18px rgba(59,130,246,.35);
+}
+body.qdk { background: #0b0e1a !important; }
+
+/* ── СБРОС ── */
+#qc *, #qc *::before, #qc *::after {
+  box-sizing: border-box !important;
+  margin: 0 !important; padding: 0 !important;
+}
+#qc button {
+  font-family: var(--f) !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* ════ КОНТЕЙНЕР ════ */
+#qc {
+  position: fixed !important;
+  top: 0 !important; left: 0 !important; right: 0 !important;
+  width: 100% !important;
+  height: 100dvh !important;
+  font-family: var(--f) !important;
+  background: var(--bg) !important;
+  overflow: hidden !important;
+  transition: background .25s var(--ez) !important;
+  overscroll-behavior: contain !important;
+  z-index: 9999 !important;
+  will-change: height;
+  contain: layout style;
+}
+#qc::before {
+  content: '' !important; position: absolute !important;
+  width: 500px !important; height: 500px !important;
+  top: -150px !important; right: -80px !important;
+  background: radial-gradient(circle,rgba(37,99,235,.06) 0%,transparent 65%) !important;
+  border-radius: 50% !important; pointer-events: none !important;
+  animation: qcOrb 14s ease-in-out infinite !important; z-index: 0 !important;
+}
+@keyframes qcOrb{0%,100%{transform:translate(0,0)scale(1)}40%{transform:translate(16px,-12px)scale(1.04)}70%{transform:translate(-10px,7px)scale(.97)}}
+
+/* ── ТУЛБАР ── */
+#qc-bar {
+  position: absolute !important;
+  top: 0 !important; left: 0 !important; right: 0 !important;
+  display: flex !important; align-items: center !important; justify-content: space-between !important;
+  padding: 12px 18px 8px !important;
+  padding-top: max(12px, env(safe-area-inset-top, 12px)) !important;
+  background: transparent !important;
+  z-index: 30 !important;
+  transition: background .25s var(--ez), box-shadow .25s !important;
+}
+#qc-bar.scrolled { background: var(--pn) !important; box-shadow: 0 1px 12px rgba(0,0,0,.06) !important; }
+#qc.dk #qc-bar.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,.4) !important; }
+
+#qc-bar-l { display: flex !important; align-items: center !important; gap: 10px !important; }
+#qc-bar-r { display: flex !important; align-items: center !important; gap: 6px !important; }
+
+#qc-ava {
+  width: 34px !important; height: 34px !important; border-radius: 10px !important;
+  background: linear-gradient(135deg,#2563eb,#0ea5e9) !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  flex-shrink: 0 !important; box-shadow: var(--sa) !important;
+}
+#qc-ava svg { width: 18px !important; height: 18px !important; fill: #fff !important; }
+
+#qc-name { font-size: 14px !important; font-weight: 700 !important; color: var(--t1) !important; line-height: 1.3 !important; }
+#qc-n2   { font-weight: 300 !important; }
+
+#qc-stat {
+  display: flex !important; align-items: center !important; gap: 5px !important;
+  font-size: 11px !important; color: var(--ok) !important; font-weight: 500 !important;
+}
+#qc-stat::before { content: '' !important; width: 6px !important; height: 6px !important; background: var(--ok) !important; border-radius: 50% !important; display: inline-block !important; animation: qcBlink 2s ease-in-out infinite !important; }
+#qc-stat.busy { color: var(--wn) !important; }
+#qc-stat.busy::before { background: var(--wn) !important; }
+@keyframes qcBlink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+
+/* Кнопки тулбара — базовый стиль */
+#qc .qc-tb {
+  width: 34px !important; height: 34px !important; border-radius: 8px !important;
+  border: 1px solid var(--brd) !important; background: rgba(255,255,255,.6) !important;
+  color: var(--t2) !important; display: flex !important; align-items: center !important; justify-content: center !important;
+  transition: all .12s var(--ez) !important; backdrop-filter: blur(8px) !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+}
+#qc.dk .qc-tb { background: rgba(255,255,255,.06) !important; }
+/* :hover УДАЛЁН отсюда → перенесён в @media(hover:hover) внизу */
+#qc .qc-tb:active {
+  background: var(--ac) !important; color: #fff !important;
+  border-color: var(--ac) !important;
+  transform: scale(0.92) !important; transition-duration: .06s !important;
+}
+#qc .qc-tb svg { width: 16px !important; height: 16px !important; fill: currentColor !important; }
+
+/* ── ЛЕНТА ── */
+#qc-msgs {
+  position: absolute !important;
+  top: var(--bar-h, 58px) !important;
+  left: 0 !important; right: 0 !important;
+  bottom: var(--bot-h, 80px) !important;
+  overflow-y: auto !important; overflow-x: hidden !important;
+  padding: 12px 16px 10px !important; display: flex !important; flex-direction: column !important;
+  gap: 16px !important; -webkit-overflow-scrolling: touch !important;
+  z-index: 1 !important;
+  overscroll-behavior-y: contain !important; touch-action: pan-y !important;
+  will-change: scroll-position;
+}
+#qc-msgs::-webkit-scrollbar { width: 4px !important; }
+#qc-msgs::-webkit-scrollbar-track { background: transparent !important; }
+#qc-msgs::-webkit-scrollbar-thumb { background: var(--brd) !important; border-radius: 4px !important; }
+
+/* ── WELCOME ── */
+#qc-welcome {
+  display: flex !important; flex-direction: column !important;
+  align-items: center !important; justify-content: center !important;
+  text-align: center !important; min-height: 100% !important; padding: 16px !important;
+  animation: qcWin .5s cubic-bezier(.34,1.56,.64,1) both !important;
+}
+@keyframes qcWin{from{opacity:0;transform:translateY(18px)scale(.96)}to{opacity:1;transform:none}}
+#qc-welcome.out { animation: qcWout .28s ease forwards !important; }
+@keyframes qcWout{to{opacity:0;transform:translateY(-12px)scale(.97)}}
+
+#qc-wi {
+  width: 64px !important; height: 64px !important; border-radius: 18px !important;
+  background: linear-gradient(135deg,#2563eb,#0ea5e9) !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  box-shadow: 0 14px 36px rgba(37,99,235,.28) !important; margin-bottom: 16px !important;
+  animation: qcFloat 4s ease-in-out infinite !important;
+}
+#qc-wi svg { width: 30px !important; height: 30px !important; fill: #fff !important; }
+@keyframes qcFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+#qc-wh { font-size: clamp(19px,4vw,24px) !important; font-weight: 600 !important; color: var(--t1) !important; letter-spacing: -.02em !important; margin-bottom: 8px !important; line-height: 1.3 !important; }
+#qc-wh span { font-weight: 300 !important; letter-spacing: .02em !important; }
+#qc-wp { font-size: 14px !important; color: var(--t2) !important; line-height: 1.6 !important; max-width: 300px !important; }
+
+#qc-chips { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 8px !important; margin-top: 20px !important; }
+#qc .qc-chip {
+  background: var(--pn) !important; border: 1px solid var(--brd) !important;
+  border-radius: 20px !important; padding: 8px 14px !important; font-size: 13px !important;
+  color: var(--t2) !important; transition: all .17s var(--ez) !important; white-space: nowrap !important;
+  animation: qcCin .4s cubic-bezier(.34,1.56,.64,1) both !important;
+}
+#qc .qc-chip:nth-child(1){animation-delay:.06s} #qc .qc-chip:nth-child(2){animation-delay:.11s} #qc .qc-chip:nth-child(3){animation-delay:.16s}
+@keyframes qcCin{from{opacity:0;transform:scale(.8)translateY(8px)}to{opacity:1;transform:none}}
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc .qc-chip:active { background: var(--ac) !important; color: #fff !important; transform: scale(0.95) !important; transition-duration: .06s !important; }
+#qc-ext { margin-top: 20px !important; width: 100% !important; display: flex !important; justify-content: center !important; flex-wrap: wrap !important; gap: 10px !important; }
+#qc-ext:empty { display: none !important; }
+
+/* ── ПУЗЫРИ ── */
+#qc .qcm {
+  display: flex !important; flex-direction: column !important;
+  max-width: min(82%,680px) !important; gap: 4px !important;
+  animation: qcMin .27s cubic-bezier(.34,1.4,.64,1) both !important;
+}
+@keyframes qcMin{from{opacity:0;transform:translateY(10px)scale(.98)}to{opacity:1;transform:none}}
+#qc .qcm.u { align-self: flex-end !important; align-items: flex-end !important; }
+#qc .qcm.b { align-self: flex-start !important; align-items: flex-start !important; }
+#qc .qcm.gen .qcm-ac { visibility: hidden !important; pointer-events: none !important; }
+
+#qc .qcm-mt { font-size: 10px !important; color: var(--t3) !important; padding: 0 6px !important; }
+
+#qc .qcm-bl { padding: 12px 16px !important; font-size: 15px !important; line-height: 1.65 !important; word-wrap: break-word !important; word-break: break-word !important; }
+#qc .ub { background: linear-gradient(135deg,#2563eb,#1d4ed8) !important; color: var(--tu) !important; border-radius: 22px 22px 4px 22px !important; box-shadow: var(--sa) !important; }
+#qc .bb { background: var(--bot) !important; color: var(--t1) !important; border-radius: 4px 22px 22px 22px !important; box-shadow: var(--s2) !important; border: 1px solid var(--brd) !important; transition: background .25s var(--ez) !important; }
+
+/* ── ИНЛАЙН РЕДАКТОР ── */
+#qc .qcm-ed {
+  background: var(--pn) !important; border: 2px solid var(--brf) !important;
+  border-radius: 22px 22px 4px 22px !important; padding: 14px 16px 10px !important;
+  box-shadow: 0 0 0 4px var(--ag), var(--s2) !important;
+  min-width: min(280px,80vw) !important; max-width: 100% !important; width: 100% !important;
+}
+#qc .qcm-edta {
+  width: 100% !important; background: transparent !important;
+  border: none !important; outline: none !important; box-shadow: none !important;
+  font-size: 15px !important; font-family: var(--f) !important; color: var(--t1) !important;
+  line-height: 1.65 !important; resize: none !important;
+  min-height: 52px !important; max-height: 200px !important; overflow-y: auto !important;
+  caret-color: var(--ac) !important; display: block !important;
+}
+#qc .qcm-ed-file {
+  display: flex !important; align-items: center !important; gap: 8px !important;
+  background: var(--pll) !important; border-radius: 10px !important;
+  padding: 7px 10px !important; margin-top: 8px !important; font-size: 12.5px !important;
+  color: var(--t2) !important; border: 1px solid var(--brd) !important;
+}
+#qc .qcm-ed-file svg { width: 13px !important; height: 13px !important; fill: var(--ac) !important; flex-shrink: 0 !important; }
+#qc .qcm-ed-file-name { overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; flex: 1 !important; }
+#qc .qcm-ed-file-rm { cursor: pointer !important; color: var(--t3) !important; display: flex !important; padding: 2px !important; border-radius: 50% !important; transition: all .14s !important; }
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc .qcm-ed-file-rm svg { width: 13px !important; height: 13px !important; fill: currentColor !important; }
+#qc .qcm-ed-addfile {
+  display: flex !important; align-items: center !important; gap: 5px !important;
+  font-size: 12px !important; color: var(--ac) !important; cursor: pointer !important;
+  margin-top: 6px !important; padding: 4px 2px !important; background: none !important;
+  border: none !important; font-family: var(--f) !important; font-weight: 500 !important;
+  transition: opacity .15s !important;
+}
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc .qcm-ed-addfile svg { width: 14px !important; height: 14px !important; fill: currentColor !important; }
+#qc .qcm-edbtns { display: flex !important; gap: 8px !important; justify-content: flex-end !important; margin-top: 10px !important; padding-top: 8px !important; border-top: 1px solid var(--brd) !important; }
+#qc .qcm-edok, #qc .qcm-edcn {
+  border: none !important; border-radius: 12px !important;
+  padding: 6px 16px !important; font-size: 13px !important; font-weight: 600 !important;
+  font-family: var(--f) !important; transition: all .15s !important; cursor: pointer !important;
+}
+#qc .qcm-edok { background: var(--ac) !important; color: #fff !important; }
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc .qcm-edcn { background: var(--pll) !important; color: var(--t2) !important; }
+
+/* Файлы в пузыре */
+#qc .qcm-fls { display: flex !important; flex-wrap: wrap !important; gap: 5px !important; margin-top: 8px !important; padding-top: 8px !important; border-top: 1px solid rgba(255,255,255,.2) !important; }
+#qc .qcm-ft { background: rgba(255,255,255,.18) !important; border-radius: 7px !important; padding: 3px 9px !important; font-size: 11.5px !important; display: flex !important; align-items: center !important; gap: 4px !important; }
+#qc .qcm-ft svg { width: 11px !important; height: 11px !important; fill: currentColor !important; }
+
+/* Загрузка */
+#qc .qcm-ld { display: flex !important; gap: 5px !important; align-items: center !important; height: 24px !important; padding: 0 4px !important; }
+#qc .qcm-ld .d { width: 7px !important; height: 7px !important; background: var(--ac) !important; border-radius: 50% !important; animation: qcDot 1.4s infinite ease-in-out both !important; }
+#qc .qcm-ld .d:nth-child(1){animation-delay:-.32s} #qc .qcm-ld .d:nth-child(2){animation-delay:-.16s}
+@keyframes qcDot{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
+
+/* ── MARKDOWN ── */
+#qc .qcm-cnt p{margin:0 0 10px!important} #qc .qcm-cnt p:last-child{margin:0!important}
+#qc .qcm-cnt strong{font-weight:700!important} #qc .qcm-cnt em{font-style:italic!important}
+#qc .qcm-cnt h1,#qc .qcm-cnt h2,#qc .qcm-cnt h3{margin:14px 0 6px!important;font-weight:700!important;line-height:1.3!important}
+#qc .qcm-cnt h1{font-size:18px!important} #qc .qcm-cnt h2{font-size:16px!important} #qc .qcm-cnt h3{font-size:15px!important}
+#qc .qcm-cnt ul,#qc .qcm-cnt ol{margin:0 0 10px!important;padding-left:20px!important}
+#qc .qcm-cnt li{margin-bottom:4px!important}
+#qc .qcm-cnt blockquote{border-left:3px solid var(--ac)!important;padding-left:12px!important;margin:10px 0!important;color:var(--t2)!important;font-style:italic!important}
+#qc .qcm-cnt table{border-collapse:collapse!important;width:100%!important;margin:10px 0!important;font-size:13px!important}
+#qc .qcm-cnt th,#qc .qcm-cnt td{border:1px solid var(--brd)!important;padding:6px 10px!important}
+#qc .qcm-cnt th{background:var(--as)!important;font-weight:600!important}
+#qc .qcm-cnt code{font-family:var(--mo)!important;background:rgba(37,99,235,.1)!important;color:var(--ac)!important;padding:2px 5px!important;border-radius:5px!important;font-size:13px!important}
+#qc .ub .qcm-cnt code{background:rgba(255,255,255,.2)!important;color:#fff!important}
+#qc .qcm-cnt pre{background:var(--cd)!important;border-radius:14px!important;margin:12px 0!important;overflow:hidden!important;box-shadow:var(--s2)!important}
+#qc .pre-hdr{display:flex!important;align-items:center!important;justify-content:space-between!important;padding:6px 12px!important;background:rgba(255,255,255,.04)!important;border-bottom:1px solid rgba(255,255,255,.06)!important}
+#qc .pre-lang{font-family:var(--mo)!important;font-size:11px!important;color:#64748b!important;text-transform:uppercase!important;letter-spacing:.08em!important}
+#qc .pre-cp{background:rgba(255,255,255,.08)!important;border:none!important;color:#94a3b8!important;font-size:11px!important;font-family:var(--f)!important;padding:3px 8px!important;border-radius:5px!important;display:flex!important;align-items:center!important;gap:3px!important;transition:all .15s!important;cursor:pointer!important}
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc .pre-cp svg{width:11px!important;height:11px!important;fill:currentColor!important}
+#qc .qcm-cnt pre code{background:none!important;color:var(--tc)!important;font-size:13px!important;padding:12px!important;display:block!important;overflow-x:auto!important;line-height:1.65!important}
+
+/* ── КНОПКИ ДЕЙСТВИЙ ── */
+#qc .qcm-ac { display: flex !important; gap: 2px !important; padding: 0 4px !important; }
+#qc .qa {
+  background: transparent !important; border: 1px solid transparent !important;
+  color: var(--t3) !important; width: 30px !important; height: 30px !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  border-radius: 8px !important; transition: all .12s var(--ez) !important; cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent !important; touch-action: manipulation !important;
+}
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc .qa:active { background: var(--ac) !important; color: #fff !important; border-color: var(--ac) !important; transform: scale(0.9) !important; transition-duration: .06s !important; }
+#qc .qa.ok  { color: var(--ok) !important; }
+#qc .qa.tts-on { color: var(--ac) !important; background: var(--as) !important; border-color: var(--ag) !important; animation: qcTTSp 1.5s ease-in-out infinite !important; }
+#qc .qa svg { width: 15px !important; height: 15px !important; fill: currentColor !important; }
+@keyframes qcTTSp{0%,100%{opacity:1}50%{opacity:.5}}
+
+#qc .qcm-sb { font-size: 12px !important; color: var(--t3) !important; display: flex !important; align-items: center !important; flex-wrap: wrap !important; gap: 7px !important; margin-top: 10px !important; padding-top: 10px !important; border-top: 1px solid var(--brd) !important; font-style: italic !important; }
+#qc .qcm-cont { background: var(--as) !important; border: 1px solid var(--ag) !important; color: var(--ac) !important; font-size: 12px !important; font-weight: 600 !important; font-family: var(--f) !important; padding: 4px 11px !important; border-radius: 10px !important; transition: all .15s !important; cursor: pointer !important; }
+/* :hover УДАЛЁН → @media(hover:hover) */
+
+/* ── КНОПКА ВНИЗ ── */
+#qc-dn {
+  position: absolute !important; bottom: calc(var(--bot-h, 80px) + 8px) !important; right: 14px !important;
+  width: 36px !important; height: 36px !important; border-radius: 50% !important;
+  background: var(--pn) !important; border: 1px solid var(--brd) !important;
+  box-shadow: var(--s2) !important; color: var(--t2) !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  opacity: 0 !important; pointer-events: none !important; z-index: 25 !important;
+  transform: translateY(10px) !important; transition: all .22s var(--ez) !important; cursor: pointer !important;
+}
+#qc-dn.on { opacity: 1 !important; pointer-events: auto !important; transform: translateY(0) !important; }
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc-dn svg { width: 18px !important; height: 18px !important; fill: currentColor !important; }
+
+/* ── НИЖНЯЯ ПАНЕЛЬ ── */
+#qc-bot {
+  position: absolute !important;
+  bottom: 0 !important; left: 0 !important; right: 0 !important;
+  background: var(--pn) !important;
+  border-top: 1px solid var(--brd) !important;
+  z-index: 20 !important;
+  transition: background .25s var(--ez) !important;
+  padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+}
+
+#qc-pills { display: flex !important; flex-wrap: wrap !important; gap: 7px !important; padding: 10px 16px 0 !important; }
+#qc-pills:empty { padding: 0 !important; }
+#qc .qcp { background: var(--pll) !important; border: 1px solid var(--brd) !important; border-radius: 12px !important; padding: 5px 10px !important; font-size: 12.5px !important; color: var(--t2) !important; display: flex !important; align-items: center !important; gap: 6px !important; max-width: 190px !important; }
+#qc .qcp-n { overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; max-width: 120px !important; }
+#qc .qcp svg { width: 13px !important; height: 13px !important; fill: var(--ac) !important; flex-shrink: 0 !important; }
+#qc .qcp-rm { cursor: pointer !important; color: var(--t3) !important; flex-shrink: 0 !important; display: flex !important; align-items: center !important; border-radius: 50% !important; width: 16px !important; height: 16px !important; transition: all .14s !important; }
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc .qcp-rm svg { width: 11px !important; height: 11px !important; fill: currentColor !important; }
+
+/* INPUT AREA */
+#qc-inarea { padding: 10px 16px 10px !important; }
+
+#qc-wrap {
+  display: flex !important; align-items: flex-end !important;
+  background: var(--inp) !important; border: 1.5px solid var(--brd) !important;
+  border-radius: 28px !important; padding: 6px 6px 6px 10px !important;
+  box-shadow: var(--s1) !important; gap: 3px !important;
+  position: relative !important; overflow: hidden !important;
+  transition: border-color .17s, box-shadow .17s, background .25s !important;
+}
+#qc-wrap:focus-within { border-color: var(--brf) !important; box-shadow: 0 0 0 3px var(--ag) !important; }
+#qc-wrap.rec { border-color: var(--er) !important; box-shadow: 0 0 0 3px rgba(239,68,68,.18) !important; animation: qcRec 1.8s ease-in-out infinite !important; }
+@keyframes qcRec{0%,100%{box-shadow:0 0 0 3px rgba(239,68,68,.14)}50%{box-shadow:0 0 0 7px rgba(239,68,68,.04)}}
+
+#qc-wave { display: none !important; align-items: center !important; gap: 2px !important; padding: 0 5px !important; height: 36px !important; flex-shrink: 0 !important; }
+#qc-wave.on { display: flex !important; }
+#qc-wave s { display: block !important; width: 3px !important; background: var(--er) !important; border-radius: 2px !important; text-decoration: none !important; animation: qcWv 1s ease-in-out infinite !important; }
+#qc-wave s:nth-child(1){height:6px;animation-delay:0s} #qc-wave s:nth-child(2){height:14px;animation-delay:.1s}
+#qc-wave s:nth-child(3){height:22px;animation-delay:.2s} #qc-wave s:nth-child(4){height:16px;animation-delay:.3s}
+#qc-wave s:nth-child(5){height:26px;animation-delay:.4s} #qc-wave s:nth-child(6){height:18px;animation-delay:.35s}
+#qc-wave s:nth-child(7){height:12px;animation-delay:.25s} #qc-wave s:nth-child(8){height:8px;animation-delay:.15s}
+@keyframes qcWv{0%,100%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+
+#qc-in {
+  flex-grow: 1 !important; background: transparent !important; border: none !important;
+  padding: 8px 4px !important; font-size: 15px !important; font-family: var(--f) !important;
+  line-height: 1.5 !important; color: var(--t1) !important; resize: none !important;
+  max-height: 160px !important; overflow-y: auto !important; caret-color: var(--ac) !important;
+}
+#qc-in::placeholder { color: var(--t3) !important; }
+#qc-in:focus { outline: none !important; box-shadow: none !important; }
+
+#qc .qc-ib {
+  background: transparent !important; border: none !important;
+  width: 36px !important; height: 36px !important; border-radius: 50% !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  color: var(--t3) !important; flex-shrink: 0 !important; margin-bottom: 1px !important;
+  transition: all .12s var(--ez) !important;
+  -webkit-tap-highlight-color: transparent !important; touch-action: manipulation !important;
+}
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc .qc-ib:active { background: var(--ac) !important; color: #fff !important; transform: scale(0.9) !important; transition-duration: .06s !important; }
+#qc .qc-ib svg { width: 19px !important; height: 19px !important; fill: currentColor !important; }
+#qc-mic.rec { color: var(--er) !important; background: rgba(239,68,68,.1) !important; animation: qcMic 1.5s infinite !important; }
+@keyframes qcMic{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.5)}50%{box-shadow:0 0 0 7px rgba(239,68,68,0)}}
+
+#qc-send {
+  background: var(--ac) !important; color: #fff !important; border: none !important;
+  border-radius: 50% !important; width: 38px !important; height: 38px !important;
+  flex-shrink: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important;
+  margin-bottom: 1px !important; box-shadow: var(--sa) !important; transition: all .15s var(--ez) !important;
+  -webkit-tap-highlight-color: transparent !important; touch-action: manipulation !important;
+}
+/* :hover УДАЛЁН → @media(hover:hover) */
+#qc-send:active { transform: scale(.88) !important; box-shadow: none !important; transition-duration: .06s !important; }
+#qc-send.stop { background: var(--er) !important; box-shadow: 0 4px 14px rgba(239,68,68,.4) !important; }
+#qc-send svg { width: 17px !important; height: 17px !important; fill: currentColor !important; }
+
+/* Файловый инпут — скрыт */
+#qc #qc-fi, #qc input[type="file"] { display: none !important; visibility: hidden !important; position: absolute !important; width: 0 !important; height: 0 !important; opacity: 0 !important; pointer-events: none !important; overflow: hidden !important; }
+
+/* Drag */
+#qc.drag::after { content: '📎 Перетащите файлы сюда' !important; position: absolute !important; inset: 0 !important; background: rgba(37,99,235,.07) !important; border: 2px dashed var(--ac) !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 17px !important; font-weight: 600 !important; color: var(--ac) !important; z-index: 100 !important; pointer-events: none !important; }
+
+/* ── АДАПТИВ ── */
+@media (max-width: 600px) {
+  #qc-msgs  { padding: 10px 10px 8px !important; gap: 13px !important; }
+  #qc .qcm  { max-width: 91% !important; }
+  #qc .qcm-bl { padding: 11px 13px !important; font-size: 14px !important; }
+  #qc-inarea { padding: 8px 10px 10px !important; }
+  #qc-bar   { padding: 12px 14px 8px !important; }
+  #qc-bar-r { gap: 4px !important; }
+}
+
+/* ── ГЛУБОКОЕ МЫШЛЕНИЕ (иконка мозга) ── */
+#qc-think.active {
+  background: linear-gradient(135deg, #8b5cf6, #6366f1, #3b82f6) !important;
+  background-size: 200% 200% !important;
+  animation: qcBrainGlow 3s ease-in-out infinite !important;
+  color: #fff !important;
+  border-color: rgba(139,92,246,.6) !important;
+  box-shadow: 0 0 12px rgba(139,92,246,.45), 0 4px 14px rgba(99,102,241,.3) !important;
+}
+#qc-think.active svg { fill: #fff !important; filter: drop-shadow(0 0 3px rgba(255,255,255,.5)) !important; }
+@keyframes qcBrainGlow {
+  0%, 100% { background-position: 0% 50%; box-shadow: 0 0 12px rgba(139,92,246,.45), 0 4px 14px rgba(99,102,241,.3); }
+  50% { background-position: 100% 50%; box-shadow: 0 0 18px rgba(99,102,241,.55), 0 4px 20px rgba(59,130,246,.35); }
+}
+
+/* ── ДИСКЛЕЙМЕР ── */
+#qc-disclaimer {
+  text-align: center !important;
+  font-size: 11px !important;
+  color: var(--t3) !important;
+  padding: 0 16px 6px !important;
+  line-height: 1.4 !important;
+  letter-spacing: .01em !important;
+  opacity: .7 !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* ── Счётчик символов ── */
+#qc-charcount {
+  font-size: 10px !important; color: var(--t3) !important;
+  text-align: right !important; padding: 2px 16px 0 !important;
+  font-family: var(--mo) !important; transition: color .15s !important;
+}
+#qc-charcount.warn { color: var(--wn) !important; }
+#qc-charcount.over { color: var(--er) !important; }
+
+/* ── Индикатор ошибки ── */
+#qc-stat.err { color: var(--er) !important; }
+#qc-stat.err::before { background: var(--er) !important; animation: none !important; }
+
+/* ── Toast ── */
+#qc-toast {
+  position: absolute !important;
+  top: calc(var(--bar-h, 58px) + 8px) !important;
+  left: 50% !important; transform: translateX(-50%) translateY(-20px) !important;
+  background: var(--er) !important; color: #fff !important;
+  padding: 8px 18px !important; border-radius: 12px !important;
+  font-size: 13px !important; font-weight: 500 !important;
+  box-shadow: 0 4px 16px rgba(239,68,68,.3) !important;
+  z-index: 50 !important; pointer-events: none !important;
+  opacity: 0 !important; transition: all .25s var(--ez) !important;
+}
+#qc-toast.show { opacity: 1 !important; transform: translateX(-50%) translateY(0) !important; }
+
+/* ── Прогресс загрузки модели ── */
+#qc-model-progress {
+  display: flex !important; align-items: center !important; gap: 14px !important;
+  background: var(--pn) !important; border: 1px solid var(--brd) !important;
+  border-radius: 16px !important; padding: 14px 18px !important;
+  box-shadow: var(--s2) !important; margin-bottom: 16px !important;
+  width: 100% !important; max-width: 360px !important;
+  animation: qcMin .3s ease both !important;
+}
+.qc-mp-icon { font-size: 28px !important; flex-shrink: 0 !important; animation: qcFloat 3s ease-in-out infinite !important; }
+.qc-mp-info { flex: 1 !important; min-width: 0 !important; }
+.qc-mp-text { font-size: 12px !important; color: var(--t2) !important; margin-bottom: 6px !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+.qc-mp-bar { height: 6px !important; background: var(--pll) !important; border-radius: 3px !important; overflow: hidden !important; }
+.qc-mp-fill { height: 100% !important; background: linear-gradient(90deg, var(--ac), #8b5cf6) !important; border-radius: 3px !important; transition: width .4s var(--ez) !important; width: 0%; }
+.qc-mp-cancel { background: none !important; border: 1px solid var(--brd) !important; border-radius: 8px !important; padding: 4px 10px !important; font-size: 11px !important; color: var(--t3) !important; cursor: pointer !important; font-family: var(--f) !important; margin-top: 4px !important; transition: all .15s !important; }
+.qc-mp-cancel:active { background: var(--er) !important; color: #fff !important; border-color: var(--er) !important; }
+.qc-mp-pct { font-size: 11px !important; color: var(--ac) !important; font-weight: 600 !important; margin-top: 4px !important; font-family: var(--mo) !important; }
+
+/* ── SETTINGS MODAL ── */
+#qc-settings-modal { position: absolute !important; inset: 0 !important; z-index: 200 !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 20px !important; }
+.qc-sm-bg { position: absolute !important; inset: 0 !important; background: rgba(0,0,0,.4) !important; backdrop-filter: blur(4px) !important; }
+.qc-sm-card { position: relative !important; background: var(--pn) !important; border-radius: 20px !important; padding: 24px !important; max-width: 380px !important; width: 100% !important; box-shadow: var(--s2) !important; animation: qcMin .25s ease both !important; }
+.qc-sm-title { font-size: 17px !important; font-weight: 700 !important; color: var(--t1) !important; margin-bottom: 16px !important; }
+.qc-sm-opts { display: flex !important; flex-direction: column !important; gap: 10px !important; }
+.qc-sm-opt { display: flex !important; align-items: flex-start !important; gap: 12px !important; padding: 12px 14px !important; border: 2px solid var(--brd) !important; border-radius: 14px !important; cursor: pointer !important; transition: all .15s !important; }
+.qc-sm-opt input { display: none !important; }
+.qc-sm-opt.active { border-color: var(--ac) !important; background: var(--as) !important; }
+.qc-sm-opt.disabled { opacity: .4 !important; cursor: not-allowed !important; }
+.qc-sm-oi { font-size: 24px !important; flex-shrink: 0 !important; margin-top: 2px !important; }
+.qc-sm-on { font-size: 14px !important; font-weight: 600 !important; color: var(--t1) !important; margin-bottom: 2px !important; }
+.qc-sm-od { font-size: 12px !important; color: var(--t2) !important; line-height: 1.4 !important; }
+.qc-sm-btns { display: flex !important; gap: 10px !important; justify-content: flex-end !important; margin-top: 18px !important; }
+.qc-sm-cancel, .qc-sm-save { border: none !important; border-radius: 12px !important; padding: 8px 20px !important; font-size: 13px !important; font-weight: 600 !important; cursor: pointer !important; transition: all .15s !important; font-family: var(--f) !important; }
+.qc-sm-cancel { background: var(--pll) !important; color: var(--t2) !important; }
+.qc-sm-save { background: var(--ac) !important; color: #fff !important; }
+
+/* ── Модал выбора режима ── */
+#qc-mode-overlay {
+  position: absolute !important; inset: 0 !important;
+  background: rgba(0,0,0,.45) !important; backdrop-filter: blur(6px) !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  z-index: 200 !important; padding: 20px !important;
+  animation: qcFadeIn .3s ease !important;
+}
+@keyframes qcFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.qc-mode-card {
+  background: var(--pn) !important; border-radius: 24px !important;
+  padding: 28px 24px 22px !important; max-width: 340px !important; width: 100% !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2) !important;
+  display: flex !important; flex-direction: column !important; align-items: center !important;
+  gap: 6px !important; text-align: center !important;
+  animation: qcMin .35s cubic-bezier(.34,1.4,.64,1) both !important;
+}
+.qc-mode-icon { font-size: 40px !important; margin-bottom: 4px !important; }
+.qc-mode-title { font-size: 18px !important; font-weight: 700 !important; color: var(--t1) !important; }
+.qc-mode-desc { font-size: 13px !important; color: var(--t2) !important; margin-bottom: 10px !important; }
+
+.qc-mode-btn {
+  width: 100% !important; border: 1.5px solid var(--brd) !important;
+  border-radius: 16px !important; padding: 14px 16px !important;
+  background: var(--pn) !important; cursor: pointer !important;
+  display: flex !important; align-items: center !important; gap: 12px !important;
+  transition: all .17s var(--ez) !important; text-align: left !important;
+  font-family: var(--f) !important; margin-top: 6px !important;
+}
+.qc-mode-btn:active { transform: scale(.97) !important; transition-duration: .06s !important; }
+.qc-mode-emoji { font-size: 28px !important; flex-shrink: 0 !important; }
+.qc-mode-label { font-size: 15px !important; font-weight: 600 !important; color: var(--t1) !important; display: block !important; }
+.qc-mode-sub { font-size: 11.5px !important; color: var(--t2) !important; display: block !important; margin-top: 2px !important; }
+
+.qc-mode-local:active { border-color: #8b5cf6 !important; background: rgba(139,92,246,.08) !important; }
+.qc-mode-server:active { border-color: var(--ac) !important; background: var(--as) !important; }
+
+.qc-mode-remember {
+  font-size: 12px !important; color: var(--t3) !important;
+  display: flex !important; align-items: center !important; gap: 6px !important;
+  margin-top: 12px !important; cursor: pointer !important;
+}
+.qc-mode-remember input { accent-color: var(--ac) !important; }
+
+
+/* ══════════════════════════════════════════════════════
+   ВСЕ :hover СТИЛИ — ТОЛЬКО ДЛЯ УСТРОЙСТВ С КУРСОРОМ
+   На тач-устройствах этот блок НЕ применяется вообще.
+   Кнопки реагируют только через :active (см. выше).
+══════════════════════════════════════════════════════ */
+@media (hover: hover) and (pointer: fine) {
+  #qc .qc-tb:hover { background: var(--as) !important; color: var(--ac) !important; border-color: var(--ag) !important; }
+  #qc .qc-chip:hover { background: var(--as) !important; border-color: var(--ac) !important; color: var(--ac) !important; }
+  #qc .qa:hover { background: var(--as) !important; color: var(--ac) !important; border-color: var(--ag) !important; }
+  #qc .qcm-cont:hover { background: var(--ac) !important; color: #fff !important; }
+  #qc-dn:hover { background: var(--ac) !important; color: #fff !important; border-color: var(--ac) !important; }
+  #qc .qcp-rm:hover { color: var(--er) !important; background: rgba(239,68,68,.1) !important; }
+  #qc .qc-ib:hover { background: var(--as) !important; color: var(--ac) !important; }
+  #qc-send:hover { transform: scale(1.07) !important; box-shadow: 0 5px 20px rgba(37,99,235,.45) !important; }
+  #qc .qcm-ed-file-rm:hover { color: var(--er) !important; background: rgba(239,68,68,.1) !important; }
+  #qc .qcm-ed-addfile:hover { opacity: .75 !important; }
+  #qc .qcm-edok:hover { opacity: .85 !important; }
+  #qc .pre-cp:hover { background: rgba(255,255,255,.16) !important; color: #e2e8f0 !important; }
+  .qc-mode-local:hover { border-color: #8b5cf6 !important; background: rgba(139,92,246,.06) !important; box-shadow: 0 0 0 3px rgba(139,92,246,.15) !important; }
+  .qc-mode-server:hover { border-color: var(--ac) !important; background: var(--as) !important; box-shadow: 0 0 0 3px var(--ag) !important; }
+  .qc-mp-cancel:hover { color: var(--er) !important; border-color: var(--er) !important; }
+  .qc-sm-save:hover { opacity: .85 !important; }
+  .qc-sm-cancel:hover { background: var(--brd) !important; }
+}

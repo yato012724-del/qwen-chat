@@ -29,7 +29,7 @@ https://github.com → Sign up
 git init
 git add .
 git commit -m "Initial commit"
-git remote add origin https://github.com/ТВОЙ_ЛОГИН/qwen-chat.git
+git remote add origin https://github.com/yato012724-del/qwen-chat.git
 git branch -M main
 git push -u origin main
 ```

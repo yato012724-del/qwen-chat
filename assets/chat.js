@@ -1,6 +1,6 @@
 /* QWEN CHAT JS v12 — WebLLM + Server, prompt-based tools, user choice */
 (function(){'use strict';
-const TOOLS_URL='https://n8n.myserverdomen.store/webhook/tools',CHAT_URL='https://n8n.myserverdomen.store/webhook/my-custom-chat',STORE_KEY='qc_h5',SETTINGS_KEY='qc_settings',MAX_MB=10,WEBLLM_MODEL='Qwen2.5-3B-Instruct-q4f16_1-MLC';
+const TOOLS_URL='https://n8n.myserverdomen.store/webhook-test/tools',CHAT_URL='https://n8n.myserverdomen.store/webhook-test/my-custom-chat',STORE_KEY='qc_h5',SETTINGS_KEY='qc_settings',MAX_MB=10,WEBLLM_MODEL='Qwen2.5-3B-Instruct-q4f16_1-MLC';
 const SYS_PROMPT='Ты — полезный ИИ-ассистент Qwen 2.5. Отвечай на том же языке что и сообщение. Если на русском — отвечай на русском. Используй эмодзи, **жирный**, заголовки, списки. Будь дружелюбным.';
 const SYS_LOCAL=SYS_PROMPT+'\nВАЖНО: Когда тебе нужна актуальная информация, факты, новости, или ты не уверен — ОБЯЗАТЕЛЬНО вставь команду: [SEARCH: запрос]\nНЕ пытайся угадать или выдумать ответ. Сначала ищи, потом отвечай.\nПосле получения результатов поиска, дай полный ответ на основе найденных данных.\nДата: '+new Date().toLocaleDateString('ru-RU');
 const G=id=>document.getElementById(id),qc=G('qc'),qcMsgs=G('qc-msgs'),qcIn=G('qc-in'),qcSend=G('qc-send'),qcSic=G('qc-sic'),qcPic=G('qc-pic'),qcAtt=G('qc-att'),qcMic=G('qc-mic'),qcWave=G('qc-wave'),qcWrap=G('qc-wrap'),qcPills=G('qc-pills'),qcFI=G('qc-fi'),qcClear=G('qc-clear'),qcRefr=G('qc-refresh'),qcTheme=G('qc-theme'),qcDn=G('qc-dn'),qcStat=G('qc-stat'),qcThink=G('qc-think');
